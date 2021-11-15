@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: menu-planning-service-app
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/menuservice
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db.changelog/db.changelog-master.yml
+server:
+  port: 9022
+itvillage:
+  app:
+    jwtSecret: itvillage29
+    jwtExpiration: 86400
+
