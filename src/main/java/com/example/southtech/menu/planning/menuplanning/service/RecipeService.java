@@ -5,9 +5,13 @@ import com.example.southtech.menu.planning.menuplanning.model.domain.Recipe;
 import com.example.southtech.menu.planning.menuplanning.model.repository.RecipeRepository;
 import com.example.southtech.menu.planning.menuplanning.web.dto.request.RecipeRequest;
 import com.example.southtech.menu.planning.menuplanning.web.dto.response.RecipeResponse;
+import com.example.southtech.menu.planning.menuplanning.web.dto.response.RecipeResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,23 +38,36 @@ public class RecipeService {
     }
 
 
-    public List<RecipeResponse> getAllRecipe() {
+    public RecipeResponse getAllRecipe(int pageNo) {
 
-        List<Recipe> recipeList = recipeRepository.findAll();
+        List<RecipeResponseDto> recipeResponseArrayList = new ArrayList<>();
 
-        List<RecipeResponse> recipeResponseArrayList = new ArrayList<>();
+        Pageable pageable = PageRequest.of(pageNo, 5);
+
+        Page<Recipe> recipeList = recipeRepository.findAll(pageable);
+
+        int page = recipeList.getNumber();
+        int size = recipeList.getSize();
+        int totalPage = recipeList.getTotalPages();
+        long totalElement = recipeList.getTotalElements();
 
         recipeList.forEach(recipe -> {
-            recipeResponseArrayList.add(new RecipeResponse(
+            recipeResponseArrayList.add(new RecipeResponseDto(
                     recipe.getRecipeName(), recipe.getRecipeIngredients(),
                     recipe.getRecipeInstruction(), recipe.getNutritionalInformation(),
                     recipe.getClassification()));
         });
 
-        return recipeResponseArrayList;
+        return RecipeResponse.builder()
+                .page(page)
+                .size(size)
+                .totalPages(totalPage)
+                .totalElements(totalElement)
+                .items(recipeResponseArrayList)
+                .build();
     }
 
-    public RecipeResponse getRecipeById(Long id) {
+    public RecipeResponseDto getRecipeById(Long id) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
@@ -60,7 +77,7 @@ public class RecipeService {
 
         Recipe recipe = recipeOptional.get();
 
-        return RecipeResponse.builder()
+        return RecipeResponseDto.builder()
                 .recipeName(recipe.getRecipeName())
                 .recipeIngredients(recipe.getRecipeIngredients())
                 .recipeInstruction(recipe.getRecipeInstruction())
@@ -69,7 +86,7 @@ public class RecipeService {
                 .build();
     }
 
-    public String updateRecipeById(Long id, RecipeResponse recipeResponse) {
+    public String updateRecipeById(Long id, RecipeResponseDto recipeResponse) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 

@@ -7,9 +7,13 @@ import com.example.southtech.menu.planning.menuplanning.model.repository.RecipeR
 import com.example.southtech.menu.planning.menuplanning.model.repository.WeekMenuRepository;
 import com.example.southtech.menu.planning.menuplanning.web.dto.request.WeekMenuRequest;
 import com.example.southtech.menu.planning.menuplanning.web.dto.response.WeekMenuResponse;
+import com.example.southtech.menu.planning.menuplanning.web.dto.response.WeekMenuResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,21 +47,35 @@ public class WeekMenuService {
     }
 
 
-    public List<WeekMenuResponse> getAllWeekMenu() {
+    public WeekMenuResponse getAllWeekMenu(int PageNo) {
 
-        List<WeeklyMenu> weeklyMenuList = weekMenuRepository.findAll();
+        Pageable pageable = PageRequest.of(PageNo,5);
 
-        List<WeekMenuResponse> weekMenuResponseList = new ArrayList<>();
+        Page<WeeklyMenu> weeklyMenuList = weekMenuRepository.findAll(pageable);
+
+            int page = weeklyMenuList.getNumber();
+            int size = weeklyMenuList.getSize();
+            int totalPage = weeklyMenuList.getTotalPages();
+            long totalElement = weeklyMenuList.getTotalElements();
+
+
+        List<WeekMenuResponseDto> weekMenuResponseList = new ArrayList<>();
 
         weeklyMenuList.forEach(weeklyMenu -> {
-            weekMenuResponseList.add(new WeekMenuResponse(weeklyMenu.getWeekName(), weeklyMenu.getDescription(),
+            weekMenuResponseList.add(new WeekMenuResponseDto(weeklyMenu.getWeekName(), weeklyMenu.getDescription(),
                     weeklyMenu.getRecipeList()));
         });
 
-        return weekMenuResponseList;
+        return WeekMenuResponse.builder()
+                .page(page)
+                .size(size)
+                .totalPages(totalPage)
+                .totalElements(totalElement)
+                .items(weekMenuResponseList)
+                .build();
     }
 
-    public WeekMenuResponse getWeekMenuById(Long id) {
+    public WeekMenuResponseDto getWeekMenuById(Long id) {
 
         Optional<WeeklyMenu> weeklyMenuOptional = weekMenuRepository.findById(id);
 
@@ -67,14 +85,14 @@ public class WeekMenuService {
 
         WeeklyMenu weeklyMenu = weeklyMenuOptional.get();
 
-        return WeekMenuResponse.builder()
+        return WeekMenuResponseDto.builder()
                 .weekName(weeklyMenu.getWeekName())
                 .description(weeklyMenu.getDescription())
                 .recipeList(weeklyMenu.getRecipeList())
                 .build();
     }
 
-    public String updateWeeklyMenuById(Long id, Long recipeId, WeekMenuResponse weekMenuResponse) {
+    public String updateWeeklyMenuById(Long id, Long recipeId, WeekMenuResponseDto weekMenuResponse) {
 
         Optional<WeeklyMenu> weeklyMenuOptional = weekMenuRepository.findById(id);
 

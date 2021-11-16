@@ -8,6 +8,7 @@ import com.example.southtech.menu.planning.menuplanning.service.WeekMenuService;
 import com.example.southtech.menu.planning.menuplanning.web.dto.request.RecipeRequest;
 import com.example.southtech.menu.planning.menuplanning.web.dto.request.WeekMenuRequest;
 import com.example.southtech.menu.planning.menuplanning.web.dto.response.RecipeResponse;
+import com.example.southtech.menu.planning.menuplanning.web.dto.response.RecipeResponseDto;
 import com.example.southtech.menu.planning.menuplanning.web.dto.response.WeekMenuResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,17 +29,17 @@ public class RecipeController {
     }
 
     @GetMapping("/fetchAll")
-    public ResponseEntity<WeekMenuResponse> getAllRecipe(){
-        return new ResponseEntity(recipeService.getAllRecipe(),HttpStatus.OK);
+    public ResponseEntity<WeekMenuResponse> getAllRecipe(int pageNo){
+        return new ResponseEntity(recipeService.getAllRecipe(pageNo),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecipeResponse> getAllRecipe(@PathVariable Long id){
+    public ResponseEntity<RecipeResponseDto> getAllRecipe(@PathVariable Long id){
         return new ResponseEntity(recipeService.getRecipeById(id),HttpStatus.OK);
     }
 
     @PutMapping("/updateBy/{id}")
-    public ResponseEntity<String> updateRecipe(@PathVariable Long id,@RequestBody RecipeResponse recipeResponse){
+    public ResponseEntity<String> updateRecipe(@PathVariable Long id,@RequestBody RecipeResponseDto recipeResponse){
 
                return new ResponseEntity(recipeService.updateRecipeById(id,recipeResponse),HttpStatus.NO_CONTENT);
     }

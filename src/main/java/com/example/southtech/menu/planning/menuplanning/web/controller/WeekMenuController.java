@@ -5,6 +5,7 @@ import com.example.southtech.menu.planning.menuplanning.constants.WeeklyMenuCons
 import com.example.southtech.menu.planning.menuplanning.service.WeekMenuService;
 import com.example.southtech.menu.planning.menuplanning.web.dto.request.WeekMenuRequest;
 import com.example.southtech.menu.planning.menuplanning.web.dto.response.WeekMenuResponse;
+import com.example.southtech.menu.planning.menuplanning.web.dto.response.WeekMenuResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,19 +26,19 @@ public class WeekMenuController {
     }
 
     @GetMapping("/fetchAll")
-    public ResponseEntity<WeekMenuResponse> getAllWeeklyMenu(){
-        return new ResponseEntity(weekMenuService.getAllWeekMenu(),HttpStatus.OK);
+    public ResponseEntity<WeekMenuResponse> getAllWeeklyMenu(int pageNo){
+        return new ResponseEntity(weekMenuService.getAllWeekMenu(pageNo),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WeekMenuResponse> getAllWeeklyMenuBy(@PathVariable Long id){
+    public ResponseEntity<WeekMenuResponseDto> getAllWeeklyMenuBy(@PathVariable Long id){
         return new ResponseEntity(weekMenuService.getWeekMenuById(id),HttpStatus.OK);
     }
 
     @PutMapping("/updateBy/{id}/recipeBy/{recipeId}")
-    public ResponseEntity<String> updateWeeklyMenu(@PathVariable Long id,@PathVariable Long recipeId,@RequestBody WeekMenuResponse weekMenuResponse){
+    public ResponseEntity<String> updateWeeklyMenu(@PathVariable Long id,@PathVariable Long recipeId,@RequestBody WeekMenuResponseDto weekMenuResponseDto){
 
-               return new ResponseEntity(weekMenuService.updateWeeklyMenuById(id,recipeId,weekMenuResponse),HttpStatus.NO_CONTENT);
+               return new ResponseEntity(weekMenuService.updateWeeklyMenuById(id,recipeId,weekMenuResponseDto),HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/deleteBy/{id}")

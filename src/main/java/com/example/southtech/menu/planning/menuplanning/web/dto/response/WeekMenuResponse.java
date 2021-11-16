@@ -11,7 +11,13 @@ import java.util.List;
 @Builder
 public class WeekMenuResponse {
 
-    private String weekName;
+    private int page;
+    private int size;
+    private int totalPages;
+    private long totalElements;
+    private List<WeekMenuResponseDto> items;
+
+   /* private String weekName;
     private String description;
-    private List<Recipe> recipeList;
+    private List<Recipe> recipeList;*/
 }
