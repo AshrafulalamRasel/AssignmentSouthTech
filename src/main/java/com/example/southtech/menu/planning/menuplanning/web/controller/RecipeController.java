@@ -28,8 +28,8 @@ public class RecipeController {
         return new ResponseEntity(recipeService.createRecipe(recipeRequest), HttpStatus.CREATED);
     }
 
-    @GetMapping("/fetchAll")
-    public ResponseEntity<WeekMenuResponse> getAllRecipe(int pageNo){
+    @GetMapping("/fetchAll/{pageNo}")
+    public ResponseEntity<WeekMenuResponse> getAllRecipe(@PathVariable int pageNo){
         return new ResponseEntity(recipeService.getAllRecipe(pageNo),HttpStatus.OK);
     }
 

@@ -11,6 +11,7 @@ import lombok.Setter;
 @Builder
 public class RecipeResponseDto {
 
+    private Long id;
     private String recipeName;
 
     private String recipeIngredients;

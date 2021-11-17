@@ -53,7 +53,7 @@ public class RecipeService {
 
         recipeList.forEach(recipe -> {
             recipeResponseArrayList.add(new RecipeResponseDto(
-                    recipe.getRecipeName(), recipe.getRecipeIngredients(),
+                   recipe.getId(), recipe.getRecipeName(), recipe.getRecipeIngredients(),
                     recipe.getRecipeInstruction(), recipe.getNutritionalInformation(),
                     recipe.getClassification()));
         });
