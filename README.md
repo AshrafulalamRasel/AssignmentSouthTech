@@ -38,7 +38,7 @@ Automate software building process
 <!-- GETTING STARTED -->
 ## Getting Started
 
-We don't need for any data migration for ROLE_ADMIN .this table automatically
+We don't need for any data migration for ROLE_ADMIN .This table automatically
 created with necessary data.We can Manage it by liquibase.
 
 

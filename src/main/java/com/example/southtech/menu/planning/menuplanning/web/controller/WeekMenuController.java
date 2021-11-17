@@ -25,8 +25,8 @@ public class WeekMenuController {
         return new ResponseEntity(weekMenuService.createWeekMenu(weekMenuRequest), HttpStatus.CREATED);
     }
 
-    @GetMapping("/fetchAll")
-    public ResponseEntity<WeekMenuResponse> getAllWeeklyMenu(int pageNo){
+    @GetMapping("/fetchAll/{pageNo}")
+    public ResponseEntity<WeekMenuResponse> getAllWeeklyMenu(@PathVariable int pageNo){
         return new ResponseEntity(weekMenuService.getAllWeekMenu(pageNo),HttpStatus.OK);
     }
 

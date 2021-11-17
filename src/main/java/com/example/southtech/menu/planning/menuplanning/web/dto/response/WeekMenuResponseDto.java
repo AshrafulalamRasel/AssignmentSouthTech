@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 public class WeekMenuResponseDto {
 
+    private Long id;
     private String weekName;
     private String description;
     private List<Recipe> recipeList;

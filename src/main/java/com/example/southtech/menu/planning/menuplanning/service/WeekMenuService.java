@@ -62,7 +62,7 @@ public class WeekMenuService {
         List<WeekMenuResponseDto> weekMenuResponseList = new ArrayList<>();
 
         weeklyMenuList.forEach(weeklyMenu -> {
-            weekMenuResponseList.add(new WeekMenuResponseDto(weeklyMenu.getWeekName(), weeklyMenu.getDescription(),
+            weekMenuResponseList.add(new WeekMenuResponseDto(weeklyMenu.getId(),weeklyMenu.getWeekName(), weeklyMenu.getDescription(),
                     weeklyMenu.getRecipeList()));
         });
 
