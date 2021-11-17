@@ -38,8 +38,8 @@ Automate software building process
 <!-- GETTING STARTED -->
 ## Getting Started
 
-We don't need for any data migration which  given me about location etc .this table automatically
-created with necessary data.
+We don't need for any data migration for ROLE_ADMIN .this table automatically
+created with necessary data.We can Manage it by liquibase.
 
 
 ## Installation
