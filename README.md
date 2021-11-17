@@ -31,6 +31,7 @@ In this [Assignment](https://github.com/AshrafulalamRasel/AssignmentSouthTech/)
 * [Spring Security](https://spring.io/projects/spring-security)
 * [Json Web Token (JWT)](https://jwt.io/)
 #### Tooling:
+Automate software building process
 * [Jenkins - CI/CD]()
 
 
